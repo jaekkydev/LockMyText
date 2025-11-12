@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LockMyText - Kalkulator Kriptografi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d4a574 0%, #c9966b 50%, #b88556 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #3d2817;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px 30px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(61, 40, 23, 0.1);
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #3d2817;
+            text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.4);
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #5d3f2e;
+            font-size: 1.1em;
+        }
+
+        .menu-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(61, 40, 23, 0.15);
+            margin-bottom: 20px;
+        }
+
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #f4e4d4 0%, #e8d4c4 100%);
+            border: 2px solid rgba(139, 90, 60, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(61, 40, 23, 0.1);
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(61, 40, 23, 0.2);
+            background: linear-gradient(135deg, #fff5e8 0%, #f4e4d4 100%);
+        }
+
+        .menu-btn h3 {
+            color: #3d2817;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .menu-btn p {
+            color: #6d4c3a;
+            font-size: 0.9em;
+        }
+
+        .work-area {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(61, 40, 23, 0.15);
+            display: none;
+        }
+
+        .work-area.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #3d2817;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(139, 90, 60, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            color: #3d2817;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8b5a3c;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(61, 40, 23, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5a3c 0%, #6d4c3a 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61, 40, 23, 0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #d4a574 0%, #c9966b 100%);
+            color: #3d2817;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61, 40, 23, 0.2);
+        }
+
+        .result-container {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            border-left: 4px solid #8b5a3c;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+            color: #3d2817;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #b88556;
+        }
+
+        .step-title {
+            color: #3d2817;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .formula {
+            background: rgba(139, 90, 60, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            color: #3d2817;
+            border: 1px dashed #8b5a3c;
+        }
+
+        .calculation {
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .final-result {
+            background: linear-gradient(135deg, #8b5a3c 0%, #6d4c3a 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(61, 40, 23, 0.2);
+        }
+
+        .info-box {
+            background: rgba(139, 90, 60, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #8b5a3c;
+        }
+
+        .info-box h4 {
+            color: #3d2817;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #5d3f2e;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LockMyText</h1>
+            <p class="subtitle">Enkripsi & Dekripsi dengan Vigenère Cipher & ElGamal</p>
+        </header>
+
+        <div class="menu-container" id="mainMenu">
+            <div class="menu-buttons">
+                <div class="menu-btn" onclick="showVigenere()">
+                    <h3>Vigenère Cipher</h3>
+                    <p>Enkripsi & dekripsi teks dengan substitusi polyalphabetic</p>
+                </div>
+                <div class="menu-btn" onclick="showElgamal()">
+                    <h3>ElGamal Cryptosystem</h3>
+                    <p>Sistem kriptografi kunci publik berbasis logaritma diskrit</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="work-area" id="vigenereArea">
+            <div class="info-box">
+                <h4>Rumus Vigenère Cipher:</h4>
+                <p><strong>Enkripsi:</strong> C<sub>i</sub> = (P<sub>i</sub> + K<sub>i</sub>) mod 26</p>
+                <p><strong>Dekripsi:</strong> P<sub>i</sub> = (C<sub>i</sub> - K<sub>i</sub>) mod 26</p>
+                <p style="margin-top: 8px; font-size: 0.95em;">Di mana A=0, B=1, C=2, ..., Z=25</p>
+            </div>
+
+            <div class="input-group">
+                <label>Mode Operasi:</label>
+                <select id="vigenereMode">
+                    <option value="encrypt">Enkripsi</option>
+                    <option value="decrypt">Dekripsi</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Teks Input:</label>
+                <textarea id="vigenereText" placeholder="Masukkan teks..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Kunci (hanya huruf):</label>
+                <input type="text" id="vigenereKey" placeholder="Contoh: KUNCI">
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="processVigenere()">Proses</button>
+                <button class="btn-secondary" onclick="backToMenu()">Kembali</button>
+            </div>
+
+            <div class="result-container" id="vigenereResult"></div>
+        </div>
+
+        <div class="work-area" id="elgamalArea">
+            <div class="info-box">
+                <h4>Rumus ElGamal:</h4>
+                <p><strong>Kunci Publik:</strong> y = g<sup>x</sup> mod p</p>
+                <p><strong>Enkripsi:</strong> c1 = g<sup>k</sup> mod p, c2 = m × y<sup>k</sup> mod p</p>
+                <p><strong>Dekripsi:</strong> m = c2 × (c1<sup>x</sup>)<sup>-1</sup> mod p</p>
+            </div>
+
+            <div class="input-group">
+                <label>Bilangan Prima (p):</label>
+                <input type="number" id="elgamalP" placeholder="Contoh: 23">
+            </div>
+
+            <div class="input-group">
+                <label>Generator (g):</label>
+                <input type="number" id="elgamalG" placeholder="Contoh: 5">
+            </div>
+
+            <button class="btn-primary" onclick="generateElgamalKeys()" style="margin-bottom: 20px;">Generate Kunci</button>
+
+            <div id="elgamalKeysDisplay" class="hidden">
+                <div class="step">
+                    <div class="step-title">Kunci yang Dihasilkan:</div>
+                    <div id="keysInfo"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Mode Operasi:</label>
+                    <select id="elgamalMode" onchange="toggleElgamalInputs()">
+                        <option value="encrypt">Enkripsi</option>
+                        <option value="decrypt">Dekripsi</option>
+                    </select>
+                </div>
+
+                <div id="encryptInputs">
+                    <div class="input-group">
+                        <label>Plaintext (bilangan bulat, m &lt; p):</label>
+                        <input type="number" id="elgamalPlaintext" placeholder="Contoh: 15">
+                    </div>
+                </div>
+
+                <div id="decryptInputs" class="hidden">
+                    <div class="input-group">
+                        <label>Ciphertext c1:</label>
+                        <input type="number" id="elgamalC1">
+                    </div>
+                    <div class="input-group">
+                        <label>Ciphertext c2:</label>
+                        <input type="number" id="elgamalC2">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="processElgamal()">Proses</button>
+                </div>
+            </div>
+
+            <button class="btn-secondary" onclick="backToMenu()">Kembali</button>
+
+            <div class="result-container" id="elgamalResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let elgamalKeys = null;
+
+        function gcd(a, b) {
+            while (b) {
+                [a, b] = [b, a % b];
+            }
+            return a;
+        }
+
+        function modInverse(a, m) {
+            for (let x = 1; x < m; x++) {
+                if ((a * x) % m === 1) return x;
+            }
+            return null;
+        }
+
+        function isPrime(n) {
+            if (n < 2) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function modPow(base, exp, mod) {
+            let result = 1;
+            base = base % mod;
+            while (exp > 0) {
+                if (exp % 2 === 1) {
+                    result = (result * base) % mod;
+                }
+                exp = Math.floor(exp / 2);
+                base = (base * base) % mod;
+            }
+            return result;
+        }
+
+        function showVigenere() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('vigenereArea').classList.add('active');
+            document.getElementById('elgamalArea').classList.remove('active');
+        }
+
+        function showElgamal() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('elgamalArea').classList.add('active');
+            document.getElementById('vigenereArea').classList.remove('active');
+        }
+
+        function backToMenu() {
+            document.getElementById('mainMenu').style.display = 'block';
+            document.getElementById('vigenereArea').classList.remove('active');
+            document.getElementById('elgamalArea').classList.remove('active');
+            document.getElementById('vigenereResult').classList.remove('show');
+            document.getElementById('elgamalResult').classList.remove('show');
+        }
+
+        function toggleElgamalInputs() {
+            const mode = document.getElementById('elgamalMode').value;
+            document.getElementById('encryptInputs').classList.toggle('hidden', mode === 'decrypt');
+            document.getElementById('decryptInputs').classList.toggle('hidden', mode === 'encrypt');
+        }
+
+        function vigenereEncrypt(plaintext, key) {
+            const clean = plaintext.toUpperCase().replace(/[^A-Z]/g, '');
+            key = key.toUpperCase();
+            const extendedKey = key.repeat(Math.ceil(clean.length / key.length)).slice(0, clean.length);
+            
+            let result = '';
+            let steps = [];
+
+            steps.push({
+                title: '1. Persiapan Data',
+                content: `
+                    <div>Plaintext asli: ${plaintext}</div>
+                    <div>Plaintext (huruf saja): ${clean}</div>
+                    <div>Kunci: ${key}</div>
+                    <div>Kunci diperpanjang: ${extendedKey}</div>
+                `
+            });
+
+            let calculations = '<div class="step-title">2. Proses Enkripsi:</div>';
+            
+            for (let i = 0; i < clean.length; i++) {
+                const p = clean.charCodeAt(i) - 65;
+                const k = extendedKey.charCodeAt(i) - 65;
+                const c = (p + k) % 26;
+                const cipher = String.fromCharCode(c + 65);
+                result += cipher;
+                
+                calculations += `
+                    <div class="calculation">
+                        <strong>Posisi ${i + 1}:</strong> ${clean[i]} (${p}) + ${extendedKey[i]} (${k}) = ${p + k} mod 26 = ${c} → <strong>${cipher}</strong>
+                    </div>
+                `;
+            }
+
+            steps.push({
+                title: 'Formula',
+                content: '<div class="formula">C<sub>i</sub> = (P<sub>i</sub> + K<sub>i</sub>) mod 26</div>' + calculations
+            });
+
+            return { steps, final: result };
+        }
+
+        function vigenereDecrypt(ciphertext, key) {
+            const clean = ciphertext.toUpperCase().replace(/[^A-Z]/g, '');
+            key = key.toUpperCase();
+            const extendedKey = key.repeat(Math.ceil(clean.length / key.length)).slice(0, clean.length);
+            
+            let result = '';
+            let steps = [];
+
+            steps.push({
+                title: '1. Persiapan Data',
+                content: `
+                    <div>Ciphertext: ${clean}</div>
+                    <div>Kunci: ${key}</div>
+                    <div>Kunci diperpanjang: ${extendedKey}</div>
+                `
+            });
+
+            let calculations = '<div class="step-title">2. Proses Dekripsi:</div>';
+            
+            for (let i = 0; i < clean.length; i++) {
+                const c = clean.charCodeAt(i) - 65;
+                const k = extendedKey.charCodeAt(i) - 65;
+                const p = (c - k + 26) % 26;
+                const plain = String.fromCharCode(p + 65);
+                result += plain;
+                
+                calculations += `
+                    <div class="calculation">
+                        <strong>Posisi ${i + 1}:</strong> ${clean[i]} (${c}) - ${extendedKey[i]} (${k}) = ${c - k} mod 26 = ${p} → <strong>${plain}</strong>
+                    </div>
+                `;
+            }
+
+            steps.push({
+                title: 'Formula',
+                content: '<div class="formula">P<sub>i</sub> = (C<sub>i</sub> - K<sub>i</sub>) mod 26</div>' + calculations
+            });
+
+            return { steps, final: result };
+        }
+
+        function processVigenere() {
+            const mode = document.getElementById('vigenereMode').value;
+            const text = document.getElementById('vigenereText').value;
+            const key = document.getElementById('vigenereKey').value;
+
+            if (!text || !key) {
+                alert('Mohon isi semua field!');
+                return;
+            }
+
+            if (!/^[a-zA-Z]+$/.test(key)) {
+                alert('Kunci harus hanya berisi huruf!');
+                return;
+            }
+
+            const result = mode === 'encrypt' ? vigenereEncrypt(text, key) : vigenereDecrypt(text, key);
+            displayVigenereResult(result, mode);
+        }
+
+        function displayVigenereResult(result, mode) {
+            const container = document.getElementById('vigenereResult');
+            let html = `<div class="result-title">${mode === 'encrypt' ? 'Hasil Enkripsi' : 'Hasil Dekripsi'}</div>`;
+            
+            result.steps.forEach(step => {
+                html += `<div class="step"><div class="step-title">${step.title}</div>${step.content}</div>`;
+            });
+
+            html += `<div class="final-result">Hasil Akhir: ${result.final}</div>`;
+            
+            container.innerHTML = html;
+            container.classList.add('show');
+        }
+
+        function generateElgamalKeys() {
+            const p = parseInt(document.getElementById('elgamalP').value);
+            const g = parseInt(document.getElementById('elgamalG').value);
+
+            if (!p || !g) {
+                alert('Mohon isi nilai p dan g!');
+                return;
+            }
+
+            if (!isPrime(p)) {
+                alert('p harus bilangan prima!');
+                return;
+            }
+
+            if (g <= 1 || g >= p) {
+                alert('g harus berada di antara 1 dan p!');
+                return;
+            }
+
+            const x = Math.floor(Math.random() * (p - 3)) + 2;
+            const y = modPow(g, x, p);
+
+            elgamalKeys = { p, g, x, y };
+
+            const keysHtml = `
+                <div class="formula">
+                    <div><strong>Parameter:</strong></div>
+                    <div style="margin: 8px 0;">• Bilangan prima (p): ${p}</div>
+                    <div style="margin: 8px 0;">• Generator (g): ${g}</div>
+                    <div style="margin-top: 15px;"><strong>Kunci Privat:</strong></div>
+                    <div style="margin: 8px 0;">• x = ${x} (dipilih acak)</div>
+                    <div style="margin-top: 15px;"><strong>Kunci Publik:</strong></div>
+                    <div style="margin: 8px 0;">• Formula: y = g<sup>x</sup> mod p</div>
+                    <div style="margin: 8px 0;">• Perhitungan: y = ${g}<sup>${x}</sup> mod ${p}</div>
+                    <div style="margin: 8px 0;">• <strong>Hasil: y = ${y}</strong></div>
+                </div>
+            `;
+
+            document.getElementById('keysInfo').innerHTML = keysHtml;
+            document.getElementById('elgamalKeysDisplay').classList.remove('hidden');
+        }
+
+        function elgamalEncrypt() {
+            const m = parseInt(document.getElementById('elgamalPlaintext').value);
+            const { p, g, y } = elgamalKeys;
+
+            if (!m && m !== 0) {
+                alert('Mohon isi plaintext!');
+                return null;
+            }
+
+            if (m >= p || m < 0) {
+                alert('Plaintext harus: 0 ≤ m < p');
+                return null;
+            }
+
+            let k = Math.floor(Math.random() * (p - 3)) + 2;
+            while (gcd(k, p - 1) !== 1) {
+                k = Math.floor(Math.random() * (p - 3)) + 2;
+            }
+
+            const c1 = modPow(g, k, p);
+            const yk = modPow(y, k, p);
+            const c2 = (m * yk) % p;
+
+            let steps = [];
+
+            steps.push({
+                title: '1. Parameter',
+                content: `
+                    <div>Plaintext (m): ${m}</div>
+                    <div>Kunci publik: (p=${p}, g=${g}, y=${y})</div>
+                    <div>Bilangan acak k: ${k}</div>
+                `
+            });
+
+            steps.push({
+                title: '2. Rumus Enkripsi',
+                content: `
+                    <div class="formula">
+                        c1 = g<sup>k</sup> mod p<br>
+                        c2 = (m × y<sup>k</sup>) mod p
+                    </div>
+                `
+            });
+
+            steps.push({
+                title: '3. Perhitungan c1',
+                content: `
+                    <div class="calculation">
+                        c1 = ${g}<sup>${k}</sup> mod ${p} = <strong>${c1}</strong>
+                    </div>
+                `
+            });
+
+            steps.push({
+                title: '4. Perhitungan c2',
+                content: `
+                    <div class="calculation">
+                        y<sup>k</sup> = ${y}<sup>${k}</sup> mod ${p} = ${yk}<br>
+                        c2 = (${m} × ${yk}) mod ${p} = <strong>${c2}</strong>
+                    </div>
+                `
+            });
+
+            return { steps, c1, c2 };
+        }
+
+        function elgamalDecrypt() {
+            const c1 = parseInt(document.getElementById('elgamalC1').value);
+            const c2 = parseInt(document.getElementById('elgamalC2').value);
+            const { p, x } = elgamalKeys;
+
+            if (!c1 || !c2) {
+                alert('Mohon isi c1 dan c2!');
+                return null;
+            }
+
+            const s = modPow(c1, x, p);
+            const sInv = modInverse(s, p);
+
+            if (sInv === null) {
+                alert('Gagal menemukan invers modular!');
+                return null;
+            }
+
+            const m = (c2 * sInv) % p;
+
+            let steps = [];
+
+            steps.push({
+                title: '1. Parameter',
+                content: `
+                    <div>Ciphertext: (c1=${c1}, c2=${c2})</div>
+                    <div>Kunci privat (x): ${x}</div>
+                    <div>Modulus (p): ${p}</div>
+                `
+            });
+
+            steps.push({
+                title: '2. Rumus Dekripsi',
+                content: `
+                    <div class="formula">
+                        s = c1<sup>x</sup> mod p<br>
+                        s<sup>-1</sup> = invers modular<br>
+                        m = (c2 × s<sup>-1</sup>) mod p
+                    </div>
+                `
+            });
+
+            steps.push({
+                title: '3. Perhitungan',
+                content: `
+                    <div class="calculation">
+                        s = ${c1}<sup>${x}</sup> mod ${p} = ${s}<br>
+                        s<sup>-1</sup> = ${sInv}<br>
+                        m = (${c2} × ${sInv}) mod ${p} = <strong>${m}</strong>
+                    </div>
+                `
+            });
+
+            return { steps, m };
+        }
+
+        function processElgamal() {
+            if (!elgamalKeys) {
+                alert('Silakan generate kunci terlebih dahulu!');
+                return;
+            }
+
+            const mode = document.getElementById('elgamalMode').value;
+            const result = mode === 'encrypt' ? elgamalEncrypt() : elgamalDecrypt();
+            
+            if (result) {
+                displayElgamalResult(result, mode);
+            }
+        }
+
+        function displayElgamalResult(result, mode) {
+            const container = document.getElementById('elgamalResult');
+            let html = `<div class="result-title">${mode === 'encrypt' ? 'Hasil Enkripsi' : 'Hasil Dekripsi'}</div>`;
+
+            result.steps.forEach(step => {
+                html += `<div class="step"><div class="step-title">${step.title}</div>${step.content}</div>`;
+            });
+
+            const finalResult = mode === 'encrypt' ? `(${result.c1}, ${result.c2})` : result.m;
+            html += `<div class="final-result">Hasil Akhir: ${finalResult}</div>`;
+            
+            container.innerHTML = html;
+            container.classList.add('show');
+        }
+    </script>
+</body>
+</html>
